@@ -2,6 +2,7 @@ import { Directive, ElementRef, Input, SimpleChanges, OnChanges, OnDestroy, OnIn
 import { VgAPI } from "../../core/services/vg-api";
 import { IHLSConfig } from './hls-config';
 import { Subscription } from 'rxjs/Subscription';
+import { VgEvents } from "../../../core";
 
 declare let Hls;
 
@@ -85,6 +86,31 @@ export class VgHLS implements OnInit, OnChanges, OnDestroy {
             this.hls = new Hls(this.config);
             this.hls.loadSource(this.vgHls);
             this.hls.attachMedia(video);
+
+
+
+            this.hls.on(Hls.Events.ERROR, function (event, data) {
+                console.info(data );
+
+                if (data.fatal) {
+                  switch(data.type) {
+                  case Hls.ErrorTypes.NETWORK_ERROR:
+                  // try to recover network error
+                    console.log("fatal network error encountered, try to recover");
+                    window.dispatchEvent(new CustomEvent(VgEvents.VG_ERROR));
+                    break;
+                  case Hls.ErrorTypes.MEDIA_ERROR:
+                    console.log("fatal media error encountered, try to recover");
+                    break;
+                  default:
+                  // cannot recover
+                    break;
+                  }
+                }
+              });
+
+
+
         }
         else {
             if (this.target && !!this.target.pause) {
