@@ -89,7 +89,8 @@ export class VgHLS implements OnInit, OnChanges, OnDestroy {
 
 
 
-            this.hls.on(Hls.Events.ERROR).subscribe( this.onHlsError.bind(this));
+            this.hls.on(Hls.Events.ERROR, this.onHlsError);
+            
 
 
 
@@ -112,15 +113,13 @@ export class VgHLS implements OnInit, OnChanges, OnDestroy {
           // try to recover network error
             
             console.error("fatal network error encountered, try to recover");
-            if(this.API!=null){
-             this.API.customErrorEvent.emit(data);
-             this.API.getDefaultMedia().dispatchEvent(new CustomEvent(VgEvents.VG_VOLUME_CHANGE));            
-            }
+            //this.API.customErrorEvent.emit(data);
+            //this.API.getDefaultMedia().dispatchEvent(new CustomEvent(VgEvents.VG_VOLUME_CHANGE));
             window.dispatchEvent(new CustomEvent(VgEvents.VG_START_ADS, data));
             
             
             window.dispatchEvent(new CustomEvent(VgEvents.VG_VOLUME_CHANGE));
-
+            this.hls.destroy();
             break;
           case Hls.ErrorTypes.MEDIA_ERROR:
             console.log("fatal media error encountered, try to recover");
