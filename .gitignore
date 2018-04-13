@@ -4,11 +4,11 @@
 **/.DS_Store
 node_modules
 npm-debug.log
-**/*.js
-**/*.js.map
-**/*.d.ts
-**/*.metadata.json
-**/*.ngsummary.json
+#**/*.js
+#**/*.js.map
+#**/*.d.ts
+#**/*.metadata.json
+#**/*.ngsummary.json
 coverage
 compiled
 docs/_book
