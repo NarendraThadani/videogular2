@@ -18,6 +18,7 @@ export declare class VgHLS implements OnInit, OnChanges, OnDestroy {
     onPlayerReady(): void;
     ngOnChanges(changes: SimpleChanges): void;
     createPlayer(): void;
+    onHlsError(event: any, data: any): void;
     destroyPlayer(): void;
     ngOnDestroy(): void;
 }

@@ -5,6 +5,7 @@ export declare class VgAPI {
     medias: Object;
     videogularElement: any;
     playerReadyEvent: EventEmitter<any>;
+    customErrorEvent: EventEmitter<any>;
     isPlayerReady: boolean;
     fsAPI: VgFullscreenAPI;
     constructor();
