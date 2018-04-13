@@ -89,26 +89,7 @@ export class VgHLS implements OnInit, OnChanges, OnDestroy {
 
 
 
-            this.hls.on(Hls.Events.ERROR, function (event, data) {
-                console.error( JSON.stringify (data) );
-
-                if (data.fatal) {
-                  switch(data.type) {
-                  case Hls.ErrorTypes.NETWORK_ERROR:
-                  // try to recover network error
-                    console.error("fatal network error encountered, try to recover");
-                    window.dispatchEvent(new CustomEvent(VgEvents.VG_ERROR));
-                    window.dispatchEvent(new CustomEvent(VgEvents.VG_VOLUME_CHANGE));
-                    break;
-                  case Hls.ErrorTypes.MEDIA_ERROR:
-                    console.log("fatal media error encountered, try to recover");
-                    break;
-                  default:
-                  // cannot recover
-                    break;
-                  }
-                }
-              });
+            this.hls.on(Hls.Events.ERROR, this.onHlsError);
 
 
 
@@ -121,6 +102,30 @@ export class VgHLS implements OnInit, OnChanges, OnDestroy {
             }
         }
     }
+
+    onHlsError (event, data) {
+        console.error( JSON.stringify (data) );
+
+        if (data.fatal) {
+          switch(data.type) {
+          case Hls.ErrorTypes.NETWORK_ERROR:
+          // try to recover network error
+            
+            console.error("fatal network error encountered, try to recover");
+            this.API.customErrorEvent.emit(data);
+            window.dispatchEvent(new CustomEvent(VgEvents.VG_ERROR));
+            window.dispatchEvent(new CustomEvent(VgEvents.VG_VOLUME_CHANGE));
+
+            break;
+          case Hls.ErrorTypes.MEDIA_ERROR:
+            console.log("fatal media error encountered, try to recover");
+            break;
+          default:
+          // cannot recover
+            break;
+          }
+        }
+      }
 
     destroyPlayer() {
         if (this.hls) {
