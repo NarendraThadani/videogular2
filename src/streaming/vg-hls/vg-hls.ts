@@ -90,13 +90,13 @@ export class VgHLS implements OnInit, OnChanges, OnDestroy {
 
 
             this.hls.on(Hls.Events.ERROR, function (event, data) {
-                console.info(data );
+                console.error(data );
 
                 if (data.fatal) {
                   switch(data.type) {
                   case Hls.ErrorTypes.NETWORK_ERROR:
                   // try to recover network error
-                    console.log("fatal network error encountered, try to recover");
+                    console.error("fatal network error encountered, try to recover");
                     window.dispatchEvent(new CustomEvent(VgEvents.VG_ERROR));
                     break;
                   case Hls.ErrorTypes.MEDIA_ERROR:
