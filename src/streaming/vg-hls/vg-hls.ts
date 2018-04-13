@@ -55,6 +55,7 @@ export class VgHLS implements OnInit, OnChanges, OnDestroy {
                 this.API.subscriptions.play.subscribe(
                     () => {
                         if (this.hls) {
+                            console.log("ConnectingDotsInfotech msg");
                             this.hls.startLoad(0);
                         }
                     }
