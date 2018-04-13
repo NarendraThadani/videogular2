@@ -104,7 +104,7 @@ export class VgHLS implements OnInit, OnChanges, OnDestroy {
     }
 
     onHlsError (event, data) {
-        console.error( JSON.stringify (data) );
+        console.error( data );
 
         if (data.fatal) {
           switch(data.type) {
