@@ -89,8 +89,9 @@ export class VgHLS implements OnInit, OnChanges, OnDestroy {
 
 
 
+            //this.hls.on(Hls.Events.ERROR, this.onHlsError);
+            this.onHlsError= this.onHlsError.bind(this);
             this.hls.on(Hls.Events.ERROR, this.onHlsError);
-            
 
 
 
@@ -120,6 +121,7 @@ export class VgHLS implements OnInit, OnChanges, OnDestroy {
             
             window.dispatchEvent(new CustomEvent(VgEvents.VG_VOLUME_CHANGE));
             this.hls.destroy();
+            
             break;
           case Hls.ErrorTypes.MEDIA_ERROR:
             console.log("fatal media error encountered, try to recover");
