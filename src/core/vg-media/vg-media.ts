@@ -420,6 +420,7 @@ export class VgMedia implements OnInit, OnDestroy, IPlayable {
 
     onError(event: any) {
         // TODO: Handle error messages
+        console.error( JSON.stringify(event));
         this.ref.detectChanges();
     }
 
